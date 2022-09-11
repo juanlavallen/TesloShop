@@ -50,7 +50,14 @@ export class Product {
   @Column({ type: 'text' })
   gender: string;
 
-  //   TODO: Tags - Images
+  @Column({
+    type: 'text',
+    array: true,
+    default: [],
+  })
+  tags: string[];
+
+  //   TODO: Images
 
   @BeforeInsert()
   checkSlugInsert() {
