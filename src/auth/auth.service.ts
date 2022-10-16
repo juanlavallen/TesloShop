@@ -36,7 +36,7 @@ export class AuthService {
 
       return {
         ...user,
-        token: this.jwt({ email: user.email }),
+        token: this.jwt({ id: user.id }),
       };
     } catch (error) {
       this.logger.error(error);
@@ -48,7 +48,7 @@ export class AuthService {
     const { email, password } = signInUserDto;
     const user = await this.repository.findOne({
       where: { email },
-      select: { email: true, password: true },
+      select: { email: true, password: true, id: true },
     });
 
     if (!user) throw new UnauthorizedException(`Credentials are not valid`);
@@ -59,7 +59,7 @@ export class AuthService {
 
     return {
       ...user,
-      token: this.jwt({ email: user.email }),
+      token: this.jwt({ id: user.id }),
     };
   }
 
