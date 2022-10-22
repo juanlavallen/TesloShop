@@ -11,6 +11,8 @@ import { AuthService } from './auth.service';
 import { CreateUserDto, SignInUserDto } from './dto';
 import { GetUser } from './decorators/';
 import { RoleGuard } from './guards/role.guard';
+import { RoleProtected } from './decorators/role-protected.decorator';
+import { AllowedRoles } from './interfaces';
 
 @Controller('auth')
 export class AuthController {
@@ -27,7 +29,7 @@ export class AuthController {
   }
 
   @Get('private')
-  @SetMetadata('roles', ['ADMIN', 'SUPER_USER'])
+  @RoleProtected(AllowedRoles.ADMIN)
   @UseGuards(AuthGuard(), RoleGuard)
   privateRoute(@GetUser('email') email: string) {
     return {
